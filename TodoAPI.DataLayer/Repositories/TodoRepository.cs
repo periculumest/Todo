@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TodoAPI.DataLayer.Repositories
 {
-    internal class TodoRepository
+    public class TodoRepository
     {
+        
     }
 }
