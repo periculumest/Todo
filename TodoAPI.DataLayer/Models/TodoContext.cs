@@ -13,14 +13,9 @@ namespace TodoAPI.DataLayer.Models
         public DbSet<Todo> Todos { get; set; }
         public DbSet<TodoStatus> TodoStatuses { get; set; }
         public string DbPath { get; }
-        public TodoContext()
+        public TodoContext(DbContextOptions<TodoContext> options) : base(options)  
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "Todo.db");
-        }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source={DbPath}");
+        }
     }
 }
