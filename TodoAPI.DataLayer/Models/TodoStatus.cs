@@ -8,7 +8,7 @@ namespace TodoAPI.DataLayer.Models
 {
     public class TodoStatus
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Status { get; set; }
         public List<Todo> Todos { get; set; } = new List<Todo>();
     }
