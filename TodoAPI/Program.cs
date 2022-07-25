@@ -16,9 +16,8 @@ builder.Services.AddDbContextPool<TodoContext>(
     o => o.UseSqlServer(builder.Configuration.GetConnectionString("Todo_conn")));
 
 builder.Services.AddScoped<ITodoListRepository, TodoListRepository>();
-//builder.Services.AddScoped<ITodoRepository, TodoRepository>();
-
-
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+builder.Services.AddScoped<ITodoStatusRepository, TodoStatusRepository>();
 
 var app = builder.Build();
 
