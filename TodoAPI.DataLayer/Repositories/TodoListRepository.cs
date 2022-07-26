@@ -17,23 +17,10 @@ namespace TodoAPI.DataLayer.Repositories
         }
         public TodoList Add(TodoList item)
         {
-            var NewTodo = new TodoList()
-            {
-                Id = Guid.NewGuid(),
-                CreatedOn = DateTime.Now,
-                Title = "test todolist",
-                UpdatedOn = DateTime.Now
-            };
-
-            _context.TodoLists.Add(NewTodo);
+            _context.TodoLists.Add(item);
             _context.SaveChanges();
 
-            return NewTodo;
-        }
-
-        public bool Delete(TodoList item)
-        {
-            throw new NotImplementedException();
+            return item;
         }
 
         public bool Delete(Guid Id)

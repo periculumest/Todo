@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoAPI.DataLayer.Models;
+using TodoAPI.DataLayer.Models.DTOs;
 using TodoAPI.DataLayer.Repositories.Interfaces;
 
 namespace TodoAPI.Controllers
@@ -22,15 +23,25 @@ namespace TodoAPI.Controllers
         }
 
         [HttpPost]
-        public Todo Post([FromBody] Todo newTodo)
+        public Todo Post([FromBody] TodoDTO Todo)
         {
+            var newTodo = new Todo()
+            {
+                CreatedOn = DateTime.Now,
+                Description = Todo.Description,
+                Id = Guid.NewGuid(),
+                LastUpdated = DateTime.Now,
+                StatusId = Todo.TodoStatusId.Value,
+                TodoListId = Todo.TodoListId.Value
+            };
+            
             return _todoRepo.Add(newTodo);
         }
 
         [HttpPut("{id}")]
-        public Todo Put(Guid id, [FromBody] Todo todoUpdate)
+        public Todo Put(Guid id, [FromBody] TodoDTO todoUpdate)
         {
-            return _todoRepo.Update(todoUpdate);
+            return _todoRepo.Update(id, todoUpdate);
         }
 
         [HttpDelete("{id}")]
