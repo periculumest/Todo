@@ -18,8 +18,7 @@ namespace TodoAPI.Controllers
         [HttpGet]
         public List<TodoList> Get()
         {
-            _todoListRepo.GetAll();
-            return new List<TodoList>();
+            return _todoListRepo.GetAll();
         }
 
         [HttpPost]

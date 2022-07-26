@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TodoAPI.DataLayer.Models;
+using TodoAPI.DataLayer.Models.DTOs;
 using TodoAPI.DataLayer.Repositories.Interfaces;
 
 namespace TodoAPI.DataLayer.Repositories
@@ -27,14 +28,11 @@ namespace TodoAPI.DataLayer.Repositories
             return NewTodo;
         }
 
-        public bool Delete(int TodoId)
+        public void Delete(Guid TodoId)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(Guid TodoId)
-        {
-            throw new NotImplementedException();
+            var TodoToDelete = _context.Todos.Where(d => d.Id == TodoId).FirstOrDefault();
+            _context.Todos.Remove(TodoToDelete);
+            _context.SaveChanges();
         }
 
         public List<Todo> GetTodos()
@@ -44,12 +42,24 @@ namespace TodoAPI.DataLayer.Repositories
 
         public List<Todo> GetTodosForList(Guid ListId)
         {
-            throw new NotImplementedException();
+            return _context.Todos.Where(d => d.TodoListId == ListId).ToList();
         }
 
-        public Todo Update(Todo TodoToUpdate)
+        public Todo Update(Guid Id, TodoDTO TodoToUpdate)
         {
-            throw new NotImplementedException();
+            var CurrentTodo = _context.Todos.Where(d => d.Id == Id).FirstOrDefault();
+            if(CurrentTodo != null)
+            {
+                CurrentTodo.TodoListId = TodoToUpdate.TodoListId ?? CurrentTodo.TodoListId;
+                CurrentTodo.StatusId = TodoToUpdate.TodoStatusId ?? CurrentTodo.StatusId;
+                CurrentTodo.Description = TodoToUpdate.Description ?? CurrentTodo.Description;
+
+                CurrentTodo.LastUpdated = DateTime.Now;
+
+                _context.SaveChanges();
+                return CurrentTodo;
+            }
+            return new Todo();
         }
     }
 }

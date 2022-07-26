@@ -15,7 +15,7 @@ namespace TodoAPI.DataLayer.Models
         public DateTime? LastUpdated { get; set; }
         public Guid TodoListId { get; set; }
         public Guid StatusId { get; set; }
-        public TodoStatus Status { get; set; } = new TodoStatus();
-        public TodoList Parent { get; set; } = new TodoList();
+        public TodoStatus Status { get; set; }
+        public TodoList Parent { get; set; }
     }
 }
